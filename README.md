@@ -1,36 +1,65 @@
-This is my Solidity project where I created a simple token contract called StudentToken. It shows the basic functionalities of a token, like minting and burning tokens, and keeping track of balances. I hope this helps you understand Solidity better!
+SolidityTokenAssesment
+This is a simple solidity program which is used for developing smart contracts on ethereum blockchain.
 
-Features
-Here are the cool things this contract can do:
+Description
+This is a simple solidity program which is used to store tokens in your account(balance) and using a mint function to add new tokens or burn function to remove the tokens form the balance.Also we print the total supply at the end after minting and burning the tokens to see how much tokens are left.
 
-Store Token Details: Keeps track of the token's name, abbreviation, and total supply.
-Track Balances: Uses a mapping to track how many tokens each address has.
-Mint Tokens: Allows you to create new tokens and give them to an address.
-Burn Tokens: Allows you to destroy tokens from an address, but only if they have enough tokens.
-Contract Breakdown
-The StudentToken contract includes the following parts:
+Getting Started
+To run this program, you can use Remix, an online Solidity IDE. To get started, go to the Remix website at https://remix.ethereum.org/.
 
-Public Variables
-tokenName: Stores the name of the token.
-tokenAbbrv: Stores the abbreviation of the token.
-totalSupply: Stores the total supply of the token.
-Mapping
-balances: A mapping that links each address to its token balance.
-Functions
-constructor: Initializes the token's details and assigns the initial supply to the person who deploys the contract.
-mint: Adds new tokens to the total supply and assigns them to a specific address.
-burn: Removes tokens from the total supply and reduces the balance of a specific address, but only if they have enough tokens.
+Executing program
+Now after opening the link you will click on the "File Explorer" option on the extreme left of the screen,then click on "create new file".
+Save the file with .sol extension (For Eg. myTokens.sol).
+Copy paste the following code on your remix platform.
+// SPDX-License-Identifier: MIT
+pragma solidity 0.8.18;
 
-Step-by-Step Guide
-Open Remix IDE: Go to Remix IDE.
+/*
+       REQUIREMENTS
+    1. Your contract will have public variables that store the details about your coin (Token Name, Token Abbrv., Total Supply)
+    2. Your contract will have a mapping of addresses to balances (address => uint)
+    3. You will have a mint function that takes two parameters: an address and a value. 
+       The function then increases the total supply by that number and increases the balance 
+       of the “sender” address by that amount
+    4. Your contract will have a burn function, which works the opposite of the mint function, as it will destroy tokens. 
+       It will take an address and value just like the mint functions. It will then deduct the value from the total supply 
+       and from the balance of the “sender”.
+    5. Lastly, your burn function should have conditionals to make sure the balance of "sender" is greater than or equal 
+       to the amount that is supposed to be burned.
+*/
 
-Create a New File: Click on the "+" icon and name your file StudentToken.sol.
+contract MyToken {
 
-Copy the Code: Copy and paste the contract code into your new file.
-Compile the Contract: Select the Solidity compiler version 0.8.18 and click "Compile StudentToken.sol".
+    // public variables here
+    string public tokenName = "CRAFTERS";
+    string public tokenAbr = "CFT";
+    uint public totalSupply = 0;
+    // mapping variable here
+    mapping(address=>uint) public balance;
 
-Deploy the Contract: Go to the "Deploy & Run Transactions" tab, select your contract, and click "Deploy".
+    // mint function
+    function mint (address add,uint value) public {
+       totalSupply += value;
+       balance[add]+=value;
 
-Interacting with the Contract
-Minting Tokens: Use the mint function to create new tokens. Enter the recipient's address and the amount of tokens to mint.
-Burning Tokens: Use the burn function to destroy tokens. Enter the address and the amount of tokens to burn. Make sure the address has enough tokens.
+    }
+    // burn function
+    function burn (address add,uint value) public {
+     if(balance[add] >= value){
+       totalSupply -= value;
+       balance[add]-=value;
+     }
+
+    }
+}
+
+To compile the code click on the "Solidity Compiler" option on the left hand side. Before compiling check the compiler option is 0.8.18,then click on the "compile" button.
+Once the code is compiled click on the "Deploy and run Transaction" button on the left side of the screen. And click on "Deploy" button.
+Once the contract is deployed, you can copy the address from the from "account" and paste the values in your "mint" function button and add any value, check the total supply (it will print the amount value which you added on the mint function button).
+you can also burn the values by copying the address from the "account" and pasting it into the "burn" function button and write a value to be burnt, check the total supply again(Now you will be able to see the total supply will be deducted by the particular amount which you have written on the burn function.
+keep in mind that if you add more value to burn than your total value than the function will simply compiled but the output will not changed.
+Authors
+Metacrafter Chris @metacraftersio academy@metacrafters.io
+
+License
+This project is licensed under the MIT License - see the LICENSE.md file for details
